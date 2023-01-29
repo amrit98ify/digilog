@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import SettingsPage from '../pages/Settings'
+import Todo from './TodoList/Todo';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 export default function Home() {
@@ -52,8 +53,8 @@ export default function Home() {
     return (
       <View style={{flexDirection: 'row', padding: 20, justifyContent: "space-between"}}>
           <View style={{flexDirection: 'row'}}>
-          <Text style={styles.textStyle}>Welcome, </Text>
-          <Text style={[styles.textStyle, styles.boldText]}>{userName}</Text>
+            <Text style={styles.textStyle}>Welcome, </Text>
+            <Text adjustsFontSizeToFit numberOfLines={1} style={[styles.textStyle, styles.boldText]}>{userName.split(' ')[0]}</Text>
           </View>
           
           <View style={{flexDirection: 'row'}}>
@@ -85,8 +86,10 @@ export default function Home() {
       />
     )
   }
+
   return (
     <SafeAreaView style={styles.container}>
+      {/* <StatusBar style="light"/> */}
       { (currentPage === 'home')
         ?
         <View style={{flex: 1}}>
@@ -112,7 +115,7 @@ export default function Home() {
                     source={{uri: thoughtForTheDay.image}} 
                     resizeMode={"contain"}
                   >
-                    <Text style={{textAlign: "center", fontSize: 24, color: "white"}}>{thoughtForTheDay.thought}</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={8} style={{textAlign: "center", fontSize: 24, color: "white"}}>{thoughtForTheDay.thought}</Text>
                     <Text style={{textAlign: "center", color: "white"}}>{thoughtForTheDay.author}</Text>
                   </ImageBackground>
                 :
@@ -123,31 +126,27 @@ export default function Home() {
         </View>
           : (currentPage === 'todo')
             ?
-            <Text>Todo Page</Text>
-            : (currentPage === 'expense')
-              ?
+            <Todo/>
+            : 
               <Text>Expense Tracker</Text>
-              :
-              <Text>Settings</Text>
       }
-    <View style={{height: 50, width: "100%", backgroundColor: 'white', justifyContent: "center", flexDirection: 'column'}}>
-      <View style={{justifyContent: "space-evenly", flexDirection: 'row'}}>
-        <TouchableOpacity onPress={() => setCurrentPage('todo')}>
-          <FontAwesome5 name="th-list" size={40} color={getActivePage('todo')} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity onPress={() => setCurrentPage('home')}>
-          <FontAwesome5 name="home" size={40} color={getActivePage('home')} style={{paddingHorizontal: 10}} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity onPress={() => setCurrentPage('expense')}>
-          <FontAwesome5 name="money-check" size={40} color={getActivePage('expense')} />
-        </TouchableOpacity>
+      <View style={{height: 50, width: "100%", backgroundColor: 'white', justifyContent: "center", flexDirection: 'column'}}>
+        <View style={{justifyContent: "space-evenly", flexDirection: 'row'}}>
+          <TouchableOpacity onPress={() => setCurrentPage('todo')}>
+            <FontAwesome5 name="th-list" size={40} color={getActivePage('todo')} />
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={() => setCurrentPage('home')}>
+            <FontAwesome5 name="home" size={40} color={getActivePage('home')} style={{paddingHorizontal: 10}} />
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={() => setCurrentPage('expense')}>
+            <FontAwesome5 name="money-check" size ={40} color={getActivePage('expense')}/>
+          </TouchableOpacity>
 
+        </View>
       </View>
-    </View>
-    <StatusBar style="auto" />
-  </SafeAreaView>
+    </SafeAreaView>
   )
   
 }

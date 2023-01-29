@@ -9,11 +9,17 @@ export default function App() {
   const [name, setName] = useState('');
   const [userName, setUserName] = useState('');
 
+  const [timeoutComplete, setTimeoutComplete] = useState(false);
+
   useEffect(() => {
     (async () => {
       getData();
       // await AsyncStorage.setItem('userName', '')
     }) ();
+
+    setTimeout(() => {
+      setTimeoutComplete(true);
+    }, 2000);
   },[])
 
   const getData = async () => {
@@ -37,13 +43,20 @@ export default function App() {
   }
 
   if (userName) {
+    if (timeoutComplete)
+      return (
+        <Home />
+      )
     return (
-      <Home />
+      <View style={{flex: 1, justifyContent: "center"}}>
+      <Text style={{alignSelf: "center"}}>HERE KEEP YOUR LOGO</Text>
+      </View>
     )
   }
   
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <Text style={{color: 'white', fontSize: 20}}>Welcome to DigiLog!</Text>
       <TextInput
         style={styles.inputStyle}
@@ -58,7 +71,6 @@ export default function App() {
       >
         <AntDesign name="arrowright" size={24} color="white" />
       </TouchableOpacity>
-      <StatusBar style="auto" />
     </View>
   );
 }
